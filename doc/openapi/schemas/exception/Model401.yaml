@@ -1,0 +1,9 @@
+
+type: object
+properties:
+  error:
+    type: string
+    example: "Unauthorized"
+  error_description:
+    type: string
+    example: "The request has not been applied because it lacks valid authentication credentials for the target resource."

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <appender name="Console" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>%d{HH:mm:ss.SSS} %X{correlationId} %-5level %logger{100}:%L - %msg%n</Pattern>
+        </layout>
+    </appender>
+    <root level="INFO">
+        <appender-ref ref="Console"/>
+    </root>
+
+    <Logger name="it.nowprj" level="DEBUG"/>
+
+</configuration>

@@ -1,0 +1,177 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.3.5'
+	id 'io.spring.dependency-management' version '1.1.6'
+
+	id 'jacoco'
+	id 'org.sonarqube' version '5.1.0.4882'
+	id 'info.solidsoft.pitest' version '1.15.0'
+
+	id 'com.diffplug.spotless' version '6.25.0'
+
+	id 'org.springdoc.openapi-gradle-plugin' version '1.9.0'
+	id 'org.openapi.generator' version '7.9.0'
+
+}
+apply plugin: 'org.openapi.generator'
+apply plugin: 'org.springframework.boot'
+
+group = 'it.nowprj.be'
+version = '1.0.0-SNAPSHOT'
+description = 'Now Prj backend'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+repositories {
+	mavenLocal()
+	mavenCentral()
+}
+
+bootRun {
+	systemProperties = System.properties as Map<String, ?>
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.postgresql:postgresql:42.7.4'
+
+	implementation 'org.mapstruct:mapstruct:1.6.3'
+	annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
+
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+
+	developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	testImplementation "org.testcontainers:junit-jupiter:1.20.3"
+	testImplementation 'commons-io:commons-io:2.17.0'
+	testImplementation 'org.instancio:instancio-junit:5.0.2'
+	testImplementation 'org.springframework.security:spring-security-test:6.3.4'
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+jacocoTestReport {
+	dependsOn test
+	reports {
+		xml.required = true
+	}
+	afterEvaluate {
+		classDirectories.setFrom(files(classDirectories.files.collect {
+			fileTree(dir: it, exclude: [
+					
+			])
+		}))
+	}
+}
+
+pitest {
+	junit5PluginVersion = '1.2.1'
+	timeoutConstInMillis = 10000
+	threads = 8
+	outputFormats = ['HTML']
+	jvmArgs = ['-Xmx1024m']
+	targetClasses = ['it.decathlon.sportyswap.*']
+	excludedClasses = [
+	]
+	pitestVersion = '1.15.0'
+	timestampedReports = false
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
+
+spotless {
+	enforceCheck false
+	java {
+		importOrder()
+		removeUnusedImports()
+		googleJavaFormat().reflowLongStrings()
+		formatAnnotations()
+		toggleOffOn()
+		licenseHeader '/* Italy Company - Fast Team(C) $YEAR */'
+	}
+}
+spotlessJava.dependsOn(tasks.openApiGenerate)
+compileJava.dependsOn(spotlessJava)
+
+tasks.register('updateGitHooks', Copy) {
+	from './scripts/pre-commit'
+	into './.git/hooks'
+}
+compileJava.dependsOn updateGitHooks
+
+springBoot {
+	buildInfo()
+}
+
+test {
+	reports {
+		html.required = true
+		junitXml.required = false
+	}
+	testLogging {
+		showStandardStreams = false
+	}
+	maxParallelForks = 1
+}
+
+//openAPI
+
+def spec = "$projectDir/doc/openapi/openapi.yaml"
+def generatedSourcesDir = "$projectDir/build/generated/openapi"
+
+sourceSets {
+	main {
+		java {
+			srcDir("$generatedSourcesDir/src/main/java")
+		}
+	}
+}
+
+openApiValidate {
+	inputSpec = "$spec".toString()
+	recommend = true;
+}
+
+openApiGenerate {
+	inputSpec = "$spec".toString()
+	outputDir = "$generatedSourcesDir".toString()
+	apiPackage = "it.nowprj.api"
+	modelPackage = "it.nowprj.model"
+	apiNameSuffix = "Api"
+	generateApiTests = true
+	generateModelTests = true
+	generateApiDocumentation = true
+
+	generatorName = "spring"
+
+	configOptions = [
+			library                : "spring-boot",
+			useSpringBoot3         : "true",
+			hideGenerationTimestamp: "true",
+			useTags                : "true",
+			openApiNullable        : "false",
+			delegatePattern        : "true",
+			interfaceOnly          : "true",
+			implicitHeadersRegex   : "X-Correlation-Id"
+	]
+	typeMappings = [
+			"number"    : "Integer"
+	]
+}

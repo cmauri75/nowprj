@@ -1,0 +1,20 @@
+services:
+  db:
+    image: postgres:15
+    command: -c 'max_connections=20'
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_HOST_AUTH_METHOD: trust
+  db-test:
+    image: postgres:15
+    command: -c 'max_connections=200'
+    ports:
+      - "15432:5432"
+    environment:
+      POSTGRES_DB: testdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres

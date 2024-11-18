@@ -1,0 +1,20 @@
+type: object
+required:
+  - orderId
+  - orderPrice
+  - orderVat
+  - items
+properties:
+  orderId:
+    type: number
+    format: int32
+  orderPrice:
+    type: number
+    format: double
+  orderVat:
+    type: number
+    format: double
+  items:
+    type: array
+    items:
+      $ref: './dto/ItemWithPrice.yaml'

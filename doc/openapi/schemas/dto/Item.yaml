@@ -1,0 +1,14 @@
+type: object
+required:
+    - product_id
+    - quantity
+properties:
+    product_id:
+        type: number
+        format: int
+        example: 1
+    quantity:
+        type: number
+        format: int
+        example: 1
+

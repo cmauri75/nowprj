@@ -1,0 +1,8 @@
+type: object
+properties:
+  error:
+    type: string
+    example: "Gone: the resource is no longer available or expired"
+  error_description:
+    type: string
+    example: "The requested resource is no longer available or has been removed."

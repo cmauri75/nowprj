@@ -1,0 +1,8 @@
+type: object
+properties:
+  error:
+    type: string
+    example: "Not Found: No data found for the provided information."
+  error_description:
+    type: string
+    example: "The requested resource was not found."

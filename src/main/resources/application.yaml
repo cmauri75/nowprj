@@ -1,0 +1,43 @@
+server:
+  port: 9090
+  servlet:
+    context-path: /nowprj
+spring:
+  application:
+    name: nowprj-be
+  jpa:
+    defer-datasource-initialization: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyComponentPathImpl
+    database: POSTGRESQL
+    show-sql: false
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: postgres
+    driverClassName: org.postgresql.Driver
+  sql:
+    init:
+      platform: postgres
+      mode: always
+  docker:
+    compose:
+      enabled: false
+      file: docker-compose.yaml
+
+springdoc:
+  api-docs:
+    version: openapi_3_1
+  swagger-ui:
+    display-request-duration: true
+    groups-order: DESC
+    operationsSorter: method
+    disable-swagger-default-url: true
+    use-root-path: true
+    path: /doc/openapi.yaml
+  show-actuator: true
+  cache:
+    disabled: true

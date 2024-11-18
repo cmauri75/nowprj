@@ -1,0 +1,60 @@
+openapi: 3.0.3
+info:
+  title: NowPrj - OpenAPI 3.0
+  description: |-
+    Just a simple example project to demonstrate how to document an API using OpenAPI 3.0.
+  contact:
+    name: Cesare Mauri
+    email: cmauri@gmail.com
+  license:
+    name: Gnu GPL 3.0
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/nowprj
+    description: Local environment server
+tags:
+  - name: Order
+    description: Operations related to Orders
+paths:
+  /order:
+    post:
+      tags:
+        - Order
+      summary: Create a new order from a list of items
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: './schemas/OrderRequest.yaml'
+      responses:
+        '200':
+          description: Order found
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/OrderResponse.yaml'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/exception/Model400.yaml'
+        '401':
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/exception/Model401.yaml'
+        '404':
+          description: Item not found
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/exception/Model404.yaml'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: './schemas/exception/Model500.yaml'

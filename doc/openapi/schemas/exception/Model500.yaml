@@ -1,0 +1,8 @@
+type: object
+properties:
+  error:
+    type: string
+    example: "Server error"
+  error_description:
+    type: string
+    example: "The server returned an error."
