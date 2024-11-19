@@ -11,9 +11,11 @@ properties:
   orderPrice:
     type: number
     format: double
+    multipleOf: 0.01
   orderVat:
     type: number
     format: double
+    multipleOf: 0.01
   items:
     type: array
     items:

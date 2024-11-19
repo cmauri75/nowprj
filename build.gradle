@@ -40,23 +40,20 @@ dependencies {
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
 	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
+	implementation 'com.h2database:h2:2.3.232'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.postgresql:postgresql:42.7.4'
 
 	implementation 'org.mapstruct:mapstruct:1.6.3'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.6.3'
 
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 
-	developmentOnly 'org.springframework.boot:spring-boot-docker-compose'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testImplementation 'com.h2database:h2:2.3.232'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
-	testImplementation 'commons-io:commons-io:2.17.0'
 	testImplementation 'org.instancio:instancio-junit:5.0.2'
-	testImplementation 'org.springframework.security:spring-security-test:6.3.4'
 }
 
 configurations {
@@ -85,7 +82,7 @@ pitest {
 	threads = 8
 	outputFormats = ['HTML']
 	jvmArgs = ['-Xmx1024m']
-	targetClasses = ['it.decathlon.sportyswap.*']
+	targetClasses = ['it.nowprj.*']
 	excludedClasses = [
 	]
 	pitestVersion = '1.15.0'
@@ -109,12 +106,6 @@ spotless {
 }
 spotlessJava.dependsOn(tasks.openApiGenerate)
 compileJava.dependsOn(spotlessJava)
-
-tasks.register('updateGitHooks', Copy) {
-	from './scripts/pre-commit'
-	into './.git/hooks'
-}
-compileJava.dependsOn updateGitHooks
 
 springBoot {
 	buildInfo()

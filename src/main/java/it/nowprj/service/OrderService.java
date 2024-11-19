@@ -28,19 +28,24 @@ public class OrderService {
 
   @Transactional
   public Order createOrder(OrderRequest request) {
+    // get data from request and DB
     var itemIds = request.getOrder().getItems().stream().map(Item::getProductId).toList();
     var itemEntityList = itemRepository.findAllById(itemIds);
 
+    // check consistency
     if (itemEntityList.size() != itemIds.size()) {
       throw new IllegalArgumentException("Some items are not found");
     }
 
+    // compute business logic
     var order =
         orderManagerService.calculateOrderFromItems(itemEntityList, request.getOrder().getItems());
 
+    // persist order info
     var orderDataEntity = OrderMapper.INSTANCE.mapToEntity(order);
     orderDataRepository.save(orderDataEntity);
 
+    // returns to caller consistent data
     return order.withOrderId(orderDataEntity.getOrderId());
   }
 }

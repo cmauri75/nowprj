@@ -22,7 +22,7 @@ public class DevInitializer {
   @PostConstruct
   public void createDummyData() {
     itemRepository.save(new ItemEntity(1, 2d, 0.1d));
-    itemRepository.save(new ItemEntity(2, 7.5d, 0.1d));
+    itemRepository.save(new ItemEntity(2, 1.5d, 0.1d));
     itemRepository.save(new ItemEntity(3, 3d, 0.1d));
     log.debug("Created 3 items");
   }

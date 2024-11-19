@@ -1,3 +1,3 @@
-FROM amazoncorretto:21-alpine
+FROM gradle:jdk21
 
 CMD ["java", "-version"]

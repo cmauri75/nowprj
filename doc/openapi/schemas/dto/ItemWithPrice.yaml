@@ -16,9 +16,11 @@ properties:
     price:
         type: number
         format: double
+        multipleOf: 0.01
         example: 2.00
     vat:
         type: number
         format: double
+        multipleOf: 0.01
         example: 0.20
 

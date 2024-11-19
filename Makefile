@@ -1,5 +1,4 @@
 SHELL := /bin/zsh
-SERVER_SERVLET_CONTEXT_PATH="/nowprj-be"
 
 init: ## starts docker-compose for app and tests
 	@./docker compose up -d
@@ -15,5 +14,5 @@ compile: ##compiles application
 	@./gradlew build -x test
 
 startApp: #start the app
-	@export SERVER_SERVLET_CONTEXT_PATH=${SERVER_SERVLET_CONTEXT_PATH} && ./gradlew bootrun --args='--spring.profiles.active=dev'
+	@./gradlew bootrun --args='--spring.profiles.active=dev'
 

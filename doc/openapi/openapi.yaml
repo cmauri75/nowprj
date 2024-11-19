@@ -16,7 +16,7 @@ tags:
   - name: Order
     description: Operations related to Orders
 paths:
-  /order:
+  /api/v1/order:
     post:
       tags:
         - Order

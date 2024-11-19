@@ -21,7 +21,7 @@ public class OrderController implements OrderApi {
   }
 
   @Override
-  public ResponseEntity<OrderResponse> orderPost(OrderRequest order) {
+  public ResponseEntity<OrderResponse> apiV1OrderPost(OrderRequest order) {
     Order res = orderService.createOrder(order);
     return new ResponseEntity<>(OrderMapper.INSTANCE.mapToModel(res), HttpStatus.OK);
   }
