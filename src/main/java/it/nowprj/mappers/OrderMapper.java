@@ -1,22 +1,24 @@
-/* Decathlon Italy - Tacos Team(C) 2024 */
+/* Italy Company - Fast Team(C) 2024 */
 package it.nowprj.mappers;
 
-import it.nowprj.entity.ItemEntity;
 import it.nowprj.dto.domain.Item;
+import it.nowprj.dto.domain.Order;
+import it.nowprj.entity.OrderDataEntity;
+import it.nowprj.entity.OrderDataItemEntity;
 import it.nowprj.model.OrderResponse;
+import java.util.List;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-import java.util.List;
-
 @Mapper
 public interface OrderMapper {
-    OrderMapper INSTANCE = Mappers.getMapper(OrderMapper.class);
+  OrderMapper INSTANCE = Mappers.getMapper(OrderMapper.class);
 
+  OrderResponse mapToModel(it.nowprj.dto.domain.Order order);
 
-    OrderResponse map(it.nowprj.dto.domain.Order order);
+  OrderDataEntity mapToEntity(Order order);
 
-    Item map(ItemEntity item);
+  OrderDataItemEntity mapToEntity(Item item);
 
-    List<Item> map(List<ItemEntity> items);
+  List<OrderDataItemEntity> mapToEntity(List<Item> item);
 }

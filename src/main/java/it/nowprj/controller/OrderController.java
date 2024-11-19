@@ -14,15 +14,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class OrderController implements OrderApi {
 
-    private final OrderService orderService;
+  private final OrderService orderService;
 
-    public OrderController(OrderService orderService) {
-        this.orderService = orderService;
-    }
+  public OrderController(OrderService orderService) {
+    this.orderService = orderService;
+  }
 
-    @Override
-    public ResponseEntity<OrderResponse> orderPost(OrderRequest order) {
-        Order res = orderService.createOrder(order);
-        return new ResponseEntity<>(OrderMapper.INSTANCE.map(res), HttpStatus.OK);
-    }
+  @Override
+  public ResponseEntity<OrderResponse> orderPost(OrderRequest order) {
+    Order res = orderService.createOrder(order);
+    return new ResponseEntity<>(OrderMapper.INSTANCE.mapToModel(res), HttpStatus.OK);
+  }
 }
