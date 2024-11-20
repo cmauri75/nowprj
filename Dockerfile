@@ -1,3 +1,3 @@
-FROM gradle:jdk21
+FROM gradle:jdk21-alpine
 
 CMD ["java", "-version"]

@@ -1,15 +1,12 @@
 /* Italy Company - Fast Team(C) 2023 */
 package it.nowprj;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import java.io.IOException;
-
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import java.io.IOException;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration;
@@ -32,7 +29,7 @@ public class NowPrjBEApplication {
   }
 
   @Bean
-  public ObjectMapper registerObjectMapper(){
+  public ObjectMapper registerObjectMapper() {
     ObjectMapper mapper = new ObjectMapper();
     SimpleModule module = new SimpleModule("DecimalJsonSerializer");
     module.addSerializer(Double.class, new DecimalJsonSerializer());

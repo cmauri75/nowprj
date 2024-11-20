@@ -24,6 +24,12 @@ public class WebSecurityConfig {
 
   private static final Logger log = org.slf4j.LoggerFactory.getLogger(WebSecurityConfig.class);
 
+  /**
+   * Standard plain configuration as placeholder, to be configured
+   * @param http
+   * @return
+   * @throws Exception
+   */
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     log.info("* SecurityFilterChain configured");
@@ -40,8 +46,7 @@ public class WebSecurityConfig {
                         headers.addHeaderWriter(new StaticHeadersWriter("X-Content-Security-Policy", "default-src 'self'"))
                                 .httpStrictTransportSecurity(security -> security.includeSubDomains(true).maxAgeInSeconds(31536000).preload(true))
                                 .xssProtection(withDefaults()))
-                .csrf(AbstractHttpConfigurer::disable)
-        ;
+                .csrf(AbstractHttpConfigurer::disable);
         // @spotless:on
     return http.build();
   }

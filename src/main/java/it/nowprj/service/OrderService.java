@@ -26,6 +26,15 @@ public class OrderService {
     this.orderManagerService = orderManagerService;
   }
 
+  /**
+   * Create an order from the request
+   * - get data from request and DB
+   * - check consistency
+   * - compute business logic using external service
+   * - persist order info
+   * @param request
+   * @return computed Order
+   */
   @Transactional
   public Order createOrder(OrderRequest request) {
     // get data from request and DB
