@@ -1,0 +1,5 @@
+FROM gradle:jdk21-alpine
+
+COPY . /mnt
+
+CMD ["java", "-version"]

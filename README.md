@@ -22,6 +22,15 @@ docker run -v $(pwd):/mnt -p 9090:9090 -w /mnt mytest ./scripts/tests.sh
 ```
 This command runs application tests, report are visible in console. 9090 port is exposed but not used
 
+HTML Report can be found in /mnt/build/reports/tests/test/index.html
+
+!Note: In M1 systems volume may interfere with gradle test causing virtual machine crash. In this case use alternative Dockerfile that copy files in docker image.
+
+```bash
+docker build -t mytestm1 -f DockerfileM1 .
+docker run -w /mnt mytestm1 ./scripts/tests.sh
+```
+
 * Run application 
 ```bash
 docker run -v $(pwd):/mnt -p 9090:9090 -w /mnt mytest ./scripts/run.sh
