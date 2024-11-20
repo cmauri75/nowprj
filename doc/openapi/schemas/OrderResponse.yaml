@@ -6,7 +6,7 @@ required:
   - items
 properties:
   orderId:
-    type: number
+    type: integer
     format: int32
   orderPrice:
     type: number

@@ -21,6 +21,7 @@ paths:
       tags:
         - Order
       summary: Create a new order from a list of items
+      operationId: createOrder
       requestBody:
         required: true
         content:

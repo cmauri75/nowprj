@@ -6,11 +6,11 @@ required:
     - vat
 properties:
     product_id:
-        type: number
+        type: integer
         format: int32
         example: 1
     quantity:
-        type: number
+        type: integer
         format: int32
         example: 1
     price:
